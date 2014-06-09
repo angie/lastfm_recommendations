@@ -1,7 +1,5 @@
 __author__ = 'am'
 import os
-import sys
-import time
 
 import pylast
 
@@ -30,6 +28,8 @@ def setup():
     # create network object for interacting with Last.fm API
     network = pylast.LastFMNetwork(api_key=api_key, api_secret=api_secret,
                                    username=username, password_hash=password)
+
+    print "Test statement."
 
     return network
 
