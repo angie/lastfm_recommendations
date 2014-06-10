@@ -5,6 +5,7 @@ import pylast
 
 
 def load_settings():
+    # read YAML settings file
     settings_file = "settings.yaml"
     if os.path.isfile(settings_file):
         import yaml
@@ -16,21 +17,26 @@ def load_settings():
     return settings
 
 
-def setup():
-    settings = load_settings()
+class Credentials:
+    def __init__(self, settings):
+        self.api_key = settings['api_key']
+        self.api_secret = settings['api_secret']
+        self.username = settings['username']
+        self.password = settings['password']
 
-    # grab LastFMNetwork variables
-    username = settings['username']
-    password = settings['password']
-    api_key = settings['api_key']
-    api_secret = settings['api_secret']
+    def setup(self):
 
-    # create network object for interacting with Last.fm API
-    network = pylast.LastFMNetwork(api_key=api_key, api_secret=api_secret,
-                                   username=username, password_hash=password)
+        # create network object for interacting with Last.fm API
+        self.network = pylast.LastFMNetwork(self.api_key, self.api_secret,
+                                            self.username, self.password)
 
-    print "Test statement."
+        return self.network
 
-    return network
 
-print setup()
+def get_my_recommended_artists():
+    x = Credentials(load_settings())
+    network = x.setup()
+    user = network.get_user("omgangie")
+    print user
+
+print get_my_recommended_artists()
