@@ -43,6 +43,12 @@ def get_my_recommended_artists(user):
     for artist in recommended_artists:
         print network.get_artist(artist.name)
 
+
+def get_my_recommended_events(user):
+    recommended_events = user.get_recommended_events(limit=10)
+    for event in recommended_events:
+        print pylast.Event.get_headliner(event), '-', pylast.Event.get_venue(event).get_location()['city']
+
 network = network_setup()
 lastfm_user = get_user()
 """
@@ -52,3 +58,4 @@ for name in names:
 """
 
 get_my_recommended_artists(get_user())
+get_my_recommended_events(get_user())
