@@ -43,8 +43,8 @@ def get_my_recommended_artists(user):
         print network.get_artist(artist.name)
 
 
-def get_my_top_artists(user):
-    top_artists = user.get_top_artists(period=pylast.PERIOD_12MONTHS, limit=5)
+def get_my_top_artists(user, x):
+    top_artists = user.get_top_artists(period=pylast.PERIOD_12MONTHS, limit=x)
     return top_artists
 
 
