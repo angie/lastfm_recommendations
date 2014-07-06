@@ -43,6 +43,11 @@ def get_my_recommended_artists(user):
         print network.get_artist(artist.name)
 
 
+def get_my_top_artists(user):
+    top_artists = user.get_top_artists(period=pylast.PERIOD_12MONTHS, limit=5)
+    return top_artists
+
+
 def get_my_recommended_events(user):
     recommended_events = user.get_recommended_events(limit=10)
     for event in recommended_events:

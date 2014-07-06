@@ -1,6 +1,6 @@
 __author__ = 'angie'
 import os
-import pyechonest
+from pyechonest import artist, config
 
 
 def load_credentials():
@@ -13,12 +13,25 @@ def load_credentials():
     else:
         print "Something is wrong with reading the file."  # very shallow error handling
 
-    return credentials
+    return credentials['API_KEY']
 
 
-def pyechonest_test():
-    pyechonest.config.ECHO_NEST_API_KEY = load_credentials()['API_KEY']
-    results = pyechonest.artist.search(name='Maroon 5')
+def pyechonest_setup():
+    from pyechonest import config
+    config.ECHO_NEST_API_KEY = load_credentials()['API_KEY']
+    results = artist.search(name='Maroon 5')
+
+    if results:
+        r = results[0]
+        print 'Artists similar to: %s:' % (r.name,)
+        for similar in r.similar:
+            print '     %s' % (similar.name,)
+    else:
+        print 'Artist not found'
+
+
+def similar_artists(search_artist):
+    results = artist.search(name=search_artist)
 
     if results:
         r = results[0]
