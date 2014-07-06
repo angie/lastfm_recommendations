@@ -1,5 +1,6 @@
 __author__ = 'angie'
-import os, pylast
+import os
+import pylast
 
 
 def load_credentials():

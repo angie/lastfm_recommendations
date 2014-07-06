@@ -1,4 +1,5 @@
 __author__ = 'angie'
+import os
 import pyechonest
 
 
