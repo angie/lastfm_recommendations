@@ -1,3 +1,4 @@
 PyYAML==3.11
+pyechonest==8.0.2
 -e git://github.com/hugovk/pylast.git@f3d31c96294af408e51564b9c0aa02fadf940376#egg=pylast-master
 wsgiref==0.1.2
