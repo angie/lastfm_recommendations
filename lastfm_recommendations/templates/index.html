@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% if user %}
+    <title>{{user}}'s Top Artists</title>
+    {% else %}
+    <title>Last.fm Top Artists</title>
+    {% endif %}
+</head>
+<body>
+    <h1><a href="{{user.get_url()}}">{{user}}</a>'s top artists</h1>
+    {% if top_artists %}
+    <ul>
+    {% for artist in top_artists.iteritems() %}
+        <li>{{ artist }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>

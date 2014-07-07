@@ -38,17 +38,45 @@ def get_user():
 
 
 def get_my_recommended_artists(user):
+    """
+    Gets the top recommended artists for the given authenticated user.
+    """
     recommended_artists = user.get_recommended_artists(limit=20)
     for artist in recommended_artists:
         print network.get_artist(artist.name)
 
 
 def get_my_top_artists(user, x):
+    """
+    Takes an authenticated user and returns the top x artists for that user.
+    """
     top_artists = user.get_top_artists(period=pylast.PERIOD_12MONTHS, limit=x)
     return top_artists
 
 
-def get_my_recommended_events(user):
-    recommended_events = user.get_recommended_events(limit=10)
+def get_my_recommended_events(user, x):
+    """
+    Takes an authenticated user and returns the top x recommended events for that user in the format:
+    Artist - City
+    """
+    recommended_events = user.get_recommended_events(limit=x)
     for event in recommended_events:
         print pylast.Event.get_headliner(event), '-', pylast.Event.get_venue(event).get_location()['city']
+
+
+def get_top_similar_artists(network, user, num_artists, num_similar_artists):
+    """
+    Returns a dictionary containing top artists for a user and a corresponding list containing
+    the top similar artists for each artist.
+    """
+    # grab top artists
+    top_artists = get_my_top_artists(user, num_artists)
+    top_similar = {}  # dict to hold {artist: [similar artists]} mapping
+    # Add only the name of the artist to the list
+    for artist in top_artists:
+        artist_string = str(artist[0])
+        top_similar[artist_string] = []  # create an empty list to hold the similar artist mapping
+        for sa in network.get_artist(artist_string).get_similar(limit=num_similar_artists):
+            similar_artist_string = str(sa[0])
+            top_similar[artist_string].append(similar_artist_string)
+    return top_similar
